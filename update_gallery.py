@@ -1,7 +1,6 @@
 import os
 import json
 from PIL import Image
-from PIL.ExifTags import TAGS
 import pillow_heif
 
 # Register HEIC format support
@@ -9,16 +8,16 @@ pillow_heif.register_heif_opener()
 
 IMAGE_DIR = "images/photography"
 OUTPUT_JSON = os.path.join(IMAGE_DIR, "photos.json")
-SUPPORTED_EXTS = (".jpg", ".jpeg", ".png", ".webp", ".heic", ".heif")
+WEB_EXTS = (".jpg", ".jpeg", ".png", ".webp")
 
-# EXIF Tag IDs for direct lookup
+# Tag IDs for EXIF metadata lookup
 TAG_FOCAL = 37386
 TAG_APERTURE = 33437
 TAG_SHUTTER = 33434
 TAG_ISO = 34855
 
 def get_exif_data(img):
-    """Extract focal length, aperture, shutter speed, and ISO reliably."""
+    """Extract focal length, aperture, shutter speed, and ISO."""
     try:
         exif = img.getexif()
         if not exif:
@@ -46,48 +45,70 @@ def get_exif_data(img):
     except Exception:
         return "STANDARD EXPOSURE"
 
-def build_manifest():
-    photos = []
+def convert_heic_files():
+    """Pass 1: Convert HEIC/HEIF files to JPG while keeping EXIF data."""
     if not os.path.exists(IMAGE_DIR):
         os.makedirs(IMAGE_DIR)
 
-    files = sorted([f for f in os.listdir(IMAGE_DIR) if f.lower().endswith(SUPPORTED_EXTS)])
-
-    for idx, fname in enumerate(files, 1):
-        full_path = os.path.join(IMAGE_DIR, fname)
+    for fname in os.listdir(IMAGE_DIR):
         base_name, ext = os.path.splitext(fname)
+        if ext.lower() in (".heic", ".heif"):
+            heic_path = os.path.join(IMAGE_DIR, fname)
+            jpg_filename = f"{base_name}.jpg"
+            jpg_path = os.path.join(IMAGE_DIR, jpg_filename)
 
+            # Convert if JPG doesn't exist yet
+            if not os.path.exists(jpg_path):
+                try:
+                    img = Image.open(heic_path)
+                    raw_exif = img.info.get("exif")
+                    if img.mode != "RGB":
+                        img = img.convert("RGB")
+
+                    if raw_exif:
+                        img.save(jpg_path, "JPEG", quality=85, exif=raw_exif)
+                    else:
+                        img.save(jpg_path, "JPEG", quality=85)
+
+                    print(f"Converted HEIC -> JPG: {fname}")
+                except Exception as e:
+                    print(f"Error converting {fname}: {e}")
+
+def build_manifest():
+    """Pass 2: Build photos.json exclusively from web-ready formats."""
+    convert_heic_files()
+
+    # Get only web-supported image files (ignores .heic)
+    files = sorted([f for f in os.listdir(IMAGE_DIR) if f.lower().endswith(WEB_EXTS)])
+
+    photos = []
+    seen_bases = set()
+
+    for fname in files:
+        base_name, _ = os.path.splitext(fname)
+        
+        # Prevent duplicates if base filename is repeated
+        if base_name.lower() in seen_bases:
+            continue
+        seen_bases.add(base_name.lower())
+
+        full_path = os.path.join(IMAGE_DIR, fname)
         try:
             img = Image.open(full_path)
             exif_info = get_exif_data(img)
 
-            # Auto-convert HEIC to JPG
-            if ext.lower() in (".heic", ".heif"):
-                jpg_filename = f"{base_name}.jpg"
-                jpg_path = os.path.join(IMAGE_DIR, jpg_filename)
-                
-                if img.mode != "RGB":
-                    img = img.convert("RGB")
-                img.save(jpg_path, "JPEG", quality=85)
-                
-                fname = jpg_filename
-
-            # Only show index string (#01, #02, etc.)
-            title = f"#{idx:02d}"
-
             photos.append({
-                "title": title,
+                "title": f"#{len(photos) + 1:02d}",
                 "exif": exif_info,
                 "src": f"{IMAGE_DIR}/{fname}"
             })
-
         except Exception as e:
             print(f"Skipping {fname}: {e}")
 
     with open(OUTPUT_JSON, "w") as f:
         json.dump(photos, f, indent=2)
 
-    print(f"Successfully processed {len(photos)} photos.")
+    print(f"Successfully generated clean manifest with {len(photos)} unique photo(s).")
 
 if __name__ == "__main__":
     build_manifest()
