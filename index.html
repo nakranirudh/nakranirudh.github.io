@@ -289,6 +289,19 @@
           font-size: 12px;
         }
       }
+
+      /* View Section Disentanglement */
+    .page-view {
+      display: none !important; /* Forces complete hiding of inactive view */
+      width: 100%;
+      position: relative;
+      clear: both;
+    }
+    
+    .page-view.active-view {
+      display: block !important; /* Only active view renders in flow */
+    }
+      
     </style>
   </head>
   <body>
@@ -304,7 +317,7 @@
     </div>
 
     <!-- ================= ACADEMIC VIEW ================= -->
-    <div id="academic-view" class="fade-section">
+    <div id="academic-view" class="page-view active-view">
       <div class="container pt-5 allstuffp">
           <div class="row pt-5 allstuff">
               <div class="col-md-4 pt-5">
@@ -494,6 +507,7 @@
 
     <!-- ================= HOBBY VIEW (ULTRA-MINIMAL BRUTALIST PORTFOLIO) ================= -->
     <!-- Inside <div id="hobby-view"> -->
+    <div id="hobby-view" class="page-view">
 <div class="brutalist-wrapper">
   <div class="brutalist-header-bar">
     <span>ARCHIVE // PHOTOGRAPHY</span>
@@ -503,6 +517,7 @@
   <!-- Empty grid that gets populated dynamically -->
   <div class="brutalist-grid" id="brutalist-grid"></div>
 </div>
+  </div>
 
 <script>
   let galleryData = [];
@@ -565,20 +580,42 @@
     
     <!-- TOGGLE LOGIC SCRIPT -->
     <script>
-      function toggleView(checkbox) {
+      function toggleView(isHobby) {
         const academicView = document.getElementById('academic-view');
         const hobbyView = document.getElementById('hobby-view');
-
-        if (checkbox.checked) {
-          // Checkbox is checked -> Switch to Hobby View
-          academicView.style.display = 'none';
-          hobbyView.style.display = 'block';
+      
+        if (isHobby) {
+          // Hide Academic completely, Show Hobby
+          academicView.classList.remove('active-view');
+          hobbyView.classList.add('active-view');
+          
+          // Load photo grid
+          if (typeof loadGallery === 'function') {
+            loadGallery();
+          }
         } else {
-          // Checkbox is unchecked -> Switch to Academic View
-          academicView.style.display = 'block';
-          hobbyView.style.display = 'none';
+          // Hide Hobby completely, Show Academic
+          hobbyView.classList.remove('active-view');
+          academicView.classList.add('active-view');
         }
+      
+        // Ensure scroll resets to top so content doesn't remain scrolled down
+        window.scrollTo(0, 0);
       }
+      
+      // Connect to your toggle input element
+      document.addEventListener('DOMContentLoaded', () => {
+        const toggleInput = document.querySelector('.switch input') || document.getElementById('view-toggle');
+        
+        if (toggleInput) {
+          toggleInput.addEventListener('change', (e) => {
+            toggleView(e.target.checked);
+          });
+          
+          // Initialize correct view state on fresh page load
+          toggleView(toggleInput.checked);
+        }
+      });
     </script>
    
     <!-- EXISTING TEXT ROTATOR SCRIPT -->
