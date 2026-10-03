@@ -19,7 +19,7 @@
       
     <title>Anirudh Nakra</title>
     
-    <!-- Added CSS for the toggle switch and fade transition -->
+    <!-- CSS for Toggle Switch, Fade Transition, and Brutalist Photography Layout -->
     <style>
       /* --- Minimal Toggle Switch CSS --- */
       .toggle-container {
@@ -88,7 +88,7 @@
 
       /* When checked (Hobby view) */
       input:checked + .slider {
-        background-color: #222222; /* Dark color to match your theme */
+        background-color: #222222; /* Dark color to match theme */
       }
 
       input:checked + .slider:before {
@@ -102,6 +102,192 @@
       @keyframes fadeIn {
         from { opacity: 0; transform: translateY(5px); }
         to { opacity: 1; transform: translateY(0); }
+      }
+
+      /* ========================================================= */
+      /* --- ULTRA-MINIMAL BRUTALIST PHOTOGRAPHY GALLERY STYLES --- */
+      /* ========================================================= */
+      #hobby-view {
+        background-color: #f4f4f0;
+        color: #000;
+        font-family: "Courier New", Courier, monospace;
+        min-height: 100vh;
+        padding-top: 60px;
+        padding-bottom: 80px;
+      }
+
+      .brutalist-wrapper {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+
+      /* Single Minimal Header Strip */
+      .brutalist-header-bar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 16px 20px;
+        border: 2px solid #000;
+        background: #f4f4f0;
+        font-weight: bold;
+        font-size: 14px;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        margin-bottom: 30px;
+      }
+
+      /* Image Grid */
+      .brutalist-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+        gap: 24px;
+      }
+
+      .brutalist-card {
+        border: 2px solid #000;
+        background: #fff;
+        display: flex;
+        flex-direction: column;
+        cursor: pointer;
+        transition: transform 0.1s ease;
+      }
+
+      .brutalist-card:hover {
+        transform: translateY(-2px);
+      }
+
+      .brutalist-frame {
+        width: 100%;
+        aspect-ratio: 4 / 3;
+        background: #e5e5e0;
+        overflow: hidden;
+        border-bottom: 2px solid #000;
+      }
+
+      .brutalist-frame img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        filter: grayscale(100%) contrast(105%);
+        transition: filter 0.2s ease, transform 0.2s ease;
+      }
+
+      .brutalist-card:hover .brutalist-frame img {
+        filter: grayscale(0%) contrast(100%);
+        transform: scale(1.02);
+      }
+
+      .brutalist-meta {
+        padding: 12px 14px;
+        font-size: 11px;
+        background: #f4f4f0;
+        color: #000;
+        font-weight: 600;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      /* Lightbox Modal */
+      .brutalist-lightbox {
+        position: fixed;
+        top: 0; left: 0; width: 100vw; height: 100vh;
+        background: rgba(0, 0, 0, 0.95);
+        color: #fff;
+        z-index: 10000;
+        display: none;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 30px;
+        font-family: "Courier New", Courier, monospace;
+      }
+
+      .brutalist-lightbox.active {
+        display: flex;
+      }
+
+      .lightbox-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid #444;
+        padding-bottom: 15px;
+        font-size: 13px;
+      }
+
+      .lightbox-close {
+        background: #fff;
+        color: #000;
+        border: none;
+        padding: 6px 14px;
+        font-weight: bold;
+        font-family: inherit;
+        cursor: pointer;
+      }
+
+      .lightbox-close:hover {
+        background: #ff3333;
+        color: #fff;
+      }
+
+      .lightbox-body {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 20px 0;
+        position: relative;
+      }
+
+      .lightbox-img {
+        max-width: 90vw;
+        max-height: 75vh;
+        object-fit: contain;
+        border: 1px solid #333;
+      }
+
+      .lightbox-nav {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background: #000;
+        color: #fff;
+        border: 1px solid #fff;
+        padding: 12px 18px;
+        font-family: inherit;
+        font-weight: bold;
+        cursor: pointer;
+        user-select: none;
+      }
+
+      .lightbox-nav:hover {
+        background: #fff;
+        color: #000;
+      }
+
+      .lightbox-nav.prev { left: 10px; }
+      .lightbox-nav.next { right: 10px; }
+
+      .lightbox-bottom {
+        border-top: 1px solid #444;
+        padding-top: 15px;
+        font-size: 12px;
+        display: flex;
+        justify-content: space-between;
+        color: #aaa;
+      }
+
+      @media (max-width: 768px) {
+        .brutalist-grid {
+          grid-template-columns: 1fr;
+        }
+        .brutalist-header-bar {
+          font-size: 12px;
+        }
       }
     </style>
   </head>
@@ -136,16 +322,11 @@
                   <div class=""><a class="menulink" target="_blank" href="https://www.linkedin.com/in/anirudh-nakra">Linkedin</a></div>
                   <div class=""><a class="menulink" target="_blank" href="https://scholar.google.com/citations?user=iE6tIeIAAAAJ&hl=en">Google Scholar</a></div>
                   <br> <span class="papertitle"><u>Latest News</u></span> <br>May'24 - Won Campus 3MT Competition @ UMD <br>Mar'24 - Won Engineering 3MT Competition @ UMD <br>Aug'23 - Selected a GLEAM fellow @ UMD ECE <br>Jan'23 - Started PhD program @ UMD ECE <br>Aug'22 - Grad Summer Intern @ Hughes <br>Aug'21 - Started MS program @ UMD ECE
-
-                  <!-- <div class="pt-5">usercontext</div> -->
-                  <!-- <div class="">travel history</div> -->
-                  <!-- <div class="">this template</div> -->
                   </div>
               </div>
               <div class="col-md-8 pt-5 about">
                    I am a PhD student at the University of Maryland, College Park advised by <a class="in-text" href="https://user.eng.umd.edu/~minwu/" target="_blank">Prof Min Wu</a> where I am specialising in signal processing with a focus on explainability.
                   I am working at the intersection of statistical signal processing and explainable machine learning to solve critical research problems.<br> <br>
-
 
                    I am currently a part of the Media and Security Team led by Prof Wu. In the past, I did my <a class="in-text" href="https://github.com/HarduinLearnsCoding/Undergraduate-Thesis-Research" target="_blank">bachelors thesis </a>
                    on designing circularly polarised antennas for 5G systems under the guidance of <a class="in-text" href="https://dtu.irins.org/profile/66958" target="_blank">Prof Asok De</a>.
@@ -233,93 +414,175 @@
 
 </div>
 
-                 <p class="header pt-5">Projects</p>
-                 <div class="py-2">
+                  <p class="header pt-5">Projects</p>
+                  <div class="py-2">
+                    <p class="paper my-2 pl-2">
+                     <span class="papertitle">XAI techniques for uncovering Spurious Correlations
+                         </span><br>
+                     <span class="thisauthor">Anirudh Nakra</span>, Henok Gebeyehu<br>
+                     <a class="tag" href="https://github.com/nakranirudh/SpuriousXAI/blob/main/CMSC848D_P3_Anirudh_Henok.pdf" target="_blank">Report</a>
+                   </p><br>
                    <p class="paper my-2 pl-2">
-                    <span class="papertitle">XAI techniques for uncovering Spurious Correlations
-                        </span><br>
-                    <span class="thisauthor">Anirudh Nakra</span>, Henok Gebeyehu<br>
-                    <a class="tag" href="https://github.com/nakranirudh/SpuriousXAI/blob/main/CMSC848D_P3_Anirudh_Henok.pdf" target="_blank">Report</a>
-                  </p><br>
-                  <p class="paper my-2 pl-2">
-                    <span class="papertitle">Comparing Modern v/s Traditional Image Inpainting algorithms
-                        </span><br>
-                    <span class="thisauthor">Anirudh Nakra</span><br>
-              
-                    <a class="tag" href="https://github.com/HarduinLearnsCoding/Image-Inpainting-Project/blob/main/Anirudh%20Nakra%20Project%20ENEE631%20DIGITAL%20IMAGE%20AND%20VIDEO%20PROCESSING.pdf" target="_blank">Report</a><span class="tagsep">|</span>
-                    <a class="tag" href="https://github.com/HarduinLearnsCoding/Image-Inpainting-Project" target="_blank">Code</a>
-                  </p>
-                  <br>
-                  <p class="paper my-2 pl-2">
-                    <span class="papertitle">Solving Underwater SLAM
-                        </span><br>
-                    <span class="thisauthor">Anirudh Nakra</span>, Henok Gebeyehu, William Chen <br>
-              
-                    <a class="tag" href="https://github.com/HarduinLearnsCoding/HarduinDoesSLAM/blob/main/Anirudh%20Henok%20Wei-Yu%20Underwater%20SLAM%20Report%20CMSC828L%20DEEP%20LEARNING.pdf" target="_blank">Report</a>
-                  </p><br>
-                  <p class="paper my-2 pl-2">
-                    <span class="papertitle">A face classifier and digit recognizer from scratch
-                        </span><br>
-                    <span class="thisauthor">Anirudh Nakra</span><br>
-                    Face Classifier <span class="tagsep">|</span>
-                    <a class="tag" href="https://github.com/HarduinLearnsCoding/Face-Classification-Project/blob/main/Anirudh%20Nakra%20SPR%20Project%201%20Report.pdf" target="_blank">Report</a><span class="tagsep">|</span>
-                    <a class="tag" href="https://github.com/HarduinLearnsCoding/Face-Classification-Project" target="_blank">Code</a><br>
-                    Digit Recognizer <span class="tagsep">|</span>
-                    <a class="tag" href="https://github.com/HarduinLearnsCoding/Digit-Recognizer-Project/blob/main/Anirudh Nakra ENEE633 Project 2 Report.pdf" target="_blank">Report</a><span class="tagsep">|</span>
-                    <a class="tag" href="https://github.com/HarduinLearnsCoding/Digit-Recognizer-Project" target="_blank">Code</a>
-                  </p><br>
-                  <p class="paper my-2 pl-2">
-                    <span class="papertitle">Efficient implementations of Fixed and Floating point MODEMs
-                        </span><br>
-                    <span class="thisauthor">Anirudh Nakra</span><br>
-                    <a class="tag" href="https://github.com/HarduinLearnsCoding/MODEM-Design/blob/main/DSP_Project_Report_Part2.pdf" target="_blank">Report</a><span class="tagsep">|</span>
-                    <a class="tag" href="https://github.com/HarduinLearnsCoding/MODEM-Design" target="_blank">Code</a><br>
-                  </p>
+                     <span class="papertitle">Comparing Modern v/s Traditional Image Inpainting algorithms
+                         </span><br>
+                     <span class="thisauthor">Anirudh Nakra</span><br>
+                       
+                     <a class="tag" href="https://github.com/HarduinLearnsCoding/Image-Inpainting-Project/blob/main/Anirudh%20Nakra%20Project%20ENEE631%20DIGITAL%20IMAGE%20AND%20VIDEO%20PROCESSING.pdf" target="_blank">Report</a><span class="tagsep">|</span>
+                     <a class="tag" href="https://github.com/HarduinLearnsCoding/Image-Inpainting-Project" target="_blank">Code</a>
+                   </p>
+                   <br>
+                   <p class="paper my-2 pl-2">
+                     <span class="papertitle">Solving Underwater SLAM
+                         </span><br>
+                     <span class="thisauthor">Anirudh Nakra</span>, Henok Gebeyehu, William Chen <br>
+                       
+                     <a class="tag" href="https://github.com/HarduinLearnsCoding/HarduinDoesSLAM/blob/main/Anirudh%20Henok%20Wei-Yu%20Underwater%20SLAM%20Report%20CMSC828L%20DEEP%20LEARNING.pdf" target="_blank">Report</a>
+                   </p><br>
+                   <p class="paper my-2 pl-2">
+                     <span class="papertitle">A face classifier and digit recognizer from scratch
+                         </span><br>
+                     <span class="thisauthor">Anirudh Nakra</span><br>
+                     Face Classifier <span class="tagsep">|</span>
+                     <a class="tag" href="https://github.com/HarduinLearnsCoding/Face-Classification-Project/blob/main/Anirudh%20Nakra%20SPR%20Project%201%20Report.pdf" target="_blank">Report</a><span class="tagsep">|</span>
+                     <a class="tag" href="https://github.com/HarduinLearnsCoding/Face-Classification-Project" target="_blank">Code</a><br>
+                     Digit Recognizer <span class="tagsep">|</span>
+                     <a class="tag" href="https://github.com/HarduinLearnsCoding/Digit-Recognizer-Project/blob/main/Anirudh Nakra ENEE633 Project 2 Report.pdf" target="_blank">Report</a><span class="tagsep">|</span>
+                     <a class="tag" href="https://github.com/HarduinLearnsCoding/Digit-Recognizer-Project" target="_blank">Code</a>
+                   </p><br>
+                   <p class="paper my-2 pl-2">
+                     <span class="papertitle">Efficient implementations of Fixed and Floating point MODEMs
+                         </span><br>
+                     <span class="thisauthor">Anirudh Nakra</span><br>
+                     <a class="tag" href="https://github.com/HarduinLearnsCoding/MODEM-Design/blob/main/DSP_Project_Report_Part2.pdf" target="_blank">Report</a><span class="tagsep">|</span>
+                     <a class="tag" href="https://github.com/HarduinLearnsCoding/MODEM-Design" target="_blank">Code</a><br>
+                   </p>
 
-                 <p class="header pt-5">Teaching</p>
-                 <div class="py-2">
-                 <p class="paper my-2 pl-2">
-                     <span class="papertitle">Spring 2023, Fall 2022 & Spring 2022</span><br>
-                     <span class="conf">ENEE439D : Design Experiences in Machine Learning</span><br>
+                  <p class="header pt-5">Teaching</p>
+                  <div class="py-2">
+                  <p class="paper my-2 pl-2">
+                      <span class="papertitle">Spring 2023, Fall 2022 & Spring 2022</span><br>
+                      <span class="conf">ENEE439D : Design Experiences in Machine Learning</span><br>
+                  </p>
+                  </div>
+                  <div class="py-2">
+                   <p class="paper my-2 pl-2">
+                     <span class="papertitle">Fall 2021</span><br>
+                     <span class="conf">DATA 603 : Principles of Machine Learning</span><br>
                  </p>
-                 </div>
-                 <div class="py-2">
-                  <p class="paper my-2 pl-2">
-                    <span class="papertitle">Fall 2021</span><br>
-                    <span class="conf">DATA 603 : Principles of Machine Learning</span><br>
-                </p>
-                 </div>
-                 <p class="header pt-5">Courses Taken</p>
-                 <div class="py-2">
-                  ENEE620 : Random Processes : (A) <br>
-                  ENEE621 : Estimation and Detection Theory : (A)<br>
-                  ENEE630 : Advanced Digital Signal Processing : (A+)<br>
-                  ENEE631 : Digital Image and Video Processing : (A+)<br>
-                  ENEE633 : Statistical Pattern Recognition : (A+)<br>
-                  ENEE662 : Convex Optimisation : (A)<br>
-                  CMSC828L : Deep Learning : (A)<br>
-                  CMSC848D : Explainable NLP : (A)<br>
-                 </div>
+                  </div>
+                  <p class="header pt-5">Courses Taken</p>
+                  <div class="py-2">
+                   ENEE620 : Random Processes : (A) <br>
+                   ENEE621 : Estimation and Detection Theory : (A)<br>
+                   ENEE630 : Advanced Digital Signal Processing : (A+)<br>
+                   ENEE631 : Digital Image and Video Processing : (A+)<br>
+                   ENEE633 : Statistical Pattern Recognition : (A+)<br>
+                   ENEE662 : Convex Optimisation : (A)<br>
+                   CMSC828L : Deep Learning : (A)<br>
+                   CMSC848D : Explainable NLP : (A)<br>
+                  </div>
 
-                 <br><br><br><br>
-                
-                 </div>
-                 </div>
-                
-            </div>
-            
+                  <br><br><br><br>
+                 
+                  </div>
+                  </div>
+                 
+             </div>
+             
+         </div>
+     </div>
+
+    <!-- ================= HOBBY VIEW (ULTRA-MINIMAL BRUTALIST PORTFOLIO) ================= -->
+    <div id="hobby-view" class="fade-section" style="display: none;">
+      <div class="brutalist-wrapper">
+        
+        <!-- Header Strip -->
+        <div class="brutalist-header-bar">
+          <span>ARCHIVE // PHOTOGRAPHY</span>
+          <span>ANIRUDH NAKRA</span>
         </div>
+
+        <!-- Image Grid -->
+        <div class="brutalist-grid" id="brutalist-grid">
+          
+          <div class="brutalist-card" onclick="openLightbox(0)">
+            <div class="brutalist-frame">
+              <img src="https://picsum.photos/900/600?random=1" alt="Concrete facade">
+            </div>
+            <div class="brutalist-meta">
+              <span>#01 // CONCRETE_FACADE</span>
+              <span>35mm • f/5.6 • 1/1000s • ISO 200</span>
+            </div>
+          </div>
+
+          <div class="brutalist-card" onclick="openLightbox(1)">
+            <div class="brutalist-frame">
+              <img src="https://picsum.photos/900/600?random=2" alt="Shadow geometry">
+            </div>
+            <div class="brutalist-meta">
+              <span>#02 // SHADOW_GEOMETRY</span>
+              <span>50mm • f/2.8 • 1/500s • ISO 100</span>
+            </div>
+          </div>
+
+          <div class="brutalist-card" onclick="openLightbox(2)">
+            <div class="brutalist-frame">
+              <img src="https://picsum.photos/900/600?random=3" alt="Monochrome passage">
+            </div>
+            <div class="brutalist-meta">
+              <span>#03 // ELEVATED_PASSAGE</span>
+              <span>24mm • f/8.0 • 1/250s • ISO 400</span>
+            </div>
+          </div>
+
+          <div class="brutalist-card" onclick="openLightbox(3)">
+            <div class="brutalist-frame">
+              <img src="https://picsum.photos/900/600?random=4" alt="Brutalist tower">
+            </div>
+            <div class="brutalist-meta">
+              <span>#04 // TOWER_STRUCTURE</span>
+              <span>85mm • f/1.8 • 1/4000s • ISO 100</span>
+            </div>
+          </div>
+
+          <div class="brutalist-card" onclick="openLightbox(4)">
+            <div class="brutalist-frame">
+              <img src="https://picsum.photos/900/600?random=5" alt="Urban reflection">
+            </div>
+            <div class="brutalist-meta">
+              <span>#05 // URBAN_REFLECTION</span>
+              <span>35mm • f/4.0 • 1/125s • ISO 800</span>
+            </div>
+          </div>
+
+          <div class="brutalist-card" onclick="openLightbox(5)">
+            <div class="brutalist-frame">
+              <img src="https://picsum.photos/900/600?random=6" alt="Minimal horizon">
+            </div>
+            <div class="brutalist-meta">
+              <span>#06 // MINIMAL_HORIZON</span>
+              <span>50mm • f/11.0 • 1/60s • ISO 100</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
     </div>
 
-    <!-- ================= HOBBY VIEW (HIDDEN BY DEFAULT) ================= -->
-    <div id="hobby-view" class="fade-section" style="display: none;">
-      <div class="container pt-5">
-        <div class="row pt-5">
-          <div class="col-md-12 pt-5 text-center">
-            <h1 class="header" style="font-size: 2.5rem; margin-top: 50px;">My Hobbies</h1>
-            <p class="pt-3 text-muted">Welcome to my hobby space! I will be adding photos, blogs, and other interests here soon.</p>
-          </div>
-        </div>
+    <!-- LIGHTBOX OVERLAY -->
+    <div class="brutalist-lightbox" id="brutalist-lightbox">
+      <div class="lightbox-top">
+        <span id="lb-title">#01 // TITLE</span>
+        <button class="lightbox-close" onclick="closeLightbox()">[ ESC / CLOSE ]</button>
+      </div>
+      <div class="lightbox-body">
+        <button class="lightbox-nav prev" onclick="changeLightbox(-1)">&#8592;</button>
+        <img src="" id="lb-image" class="lightbox-img" alt="Lightbox view">
+        <button class="lightbox-nav next" onclick="changeLightbox(1)">&#8594;</button>
+      </div>
+      <div class="lightbox-bottom">
+        <span id="lb-exif">35mm • f/5.6 • 1/1000s • ISO 200</span>
+        <span id="lb-counter">1 / 6</span>
       </div>
     </div>
 
@@ -400,6 +663,53 @@
           }
         }
       };
+    </script>
+
+    <!-- BRUTALIST LIGHTBOX LOGIC -->
+    <script>
+      const galleryData = [
+        { title: "#01 // CONCRETE_FACADE", exif: "35mm • f/5.6 • 1/1000s • ISO 200", src: "https://picsum.photos/1200/900?random=1" },
+        { title: "#02 // SHADOW_GEOMETRY", exif: "50mm • f/2.8 • 1/500s • ISO 100", src: "https://picsum.photos/1200/900?random=2" },
+        { title: "#03 // ELEVATED_PASSAGE", exif: "24mm • f/8.0 • 1/250s • ISO 400", src: "https://picsum.photos/1200/900?random=3" },
+        { title: "#04 // TOWER_STRUCTURE", exif: "85mm • f/1.8 • 1/4000s • ISO 100", src: "https://picsum.photos/1200/900?random=4" },
+        { title: "#05 // URBAN_REFLECTION", exif: "35mm • f/4.0 • 1/125s • ISO 800", src: "https://picsum.photos/1200/900?random=5" },
+        { title: "#06 // MINIMAL_HORIZON", exif: "50mm • f/11.0 • 1/60s • ISO 100", src: "https://picsum.photos/1200/900?random=6" }
+      ];
+
+      let currentIndex = 0;
+
+      function openLightbox(index) {
+        currentIndex = index;
+        updateLightbox();
+        document.getElementById('brutalist-lightbox').classList.add('active');
+      }
+
+      function closeLightbox() {
+        document.getElementById('brutalist-lightbox').classList.remove('active');
+      }
+
+      function changeLightbox(direction) {
+        currentIndex = (currentIndex + direction + galleryData.length) % galleryData.length;
+        updateLightbox();
+      }
+
+      function updateLightbox() {
+        const item = galleryData[currentIndex];
+        document.getElementById('lb-title').innerText = item.title;
+        document.getElementById('lb-exif').innerText = item.exif;
+        document.getElementById('lb-counter').innerText = (currentIndex + 1) + " / " + galleryData.length;
+        document.getElementById('lb-image').src = item.src;
+      }
+
+      // Keyboard navigation
+      document.addEventListener('keydown', function(e) {
+        const lb = document.getElementById('brutalist-lightbox');
+        if (lb.classList.contains('active')) {
+          if (e.key === 'Escape') closeLightbox();
+          if (e.key === 'ArrowLeft') changeLightbox(-1);
+          if (e.key === 'ArrowRight') changeLightbox(1);
+        }
+      });
     </script>
   </body>
 </html>
