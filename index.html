@@ -4,7 +4,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="AI Center Fellow, Microsoft Research India">
+    <meta name="description" content="PhD Student, University of Maryland, College Park">
     <meta name="author" content="Anirudh Nakra">
     <meta name="theme-color" content="#222222">
     <meta charset="UTF-8" />
@@ -19,9 +19,8 @@
       
     <title>Anirudh Nakra</title>
     
-    <!-- CSS for Toggle Switch, Fade Transition, and Brutalist Photography Layout -->
     <style>
-      /* --- Minimal Toggle Switch CSS --- */
+      /* --- Fixed Top-Right Adaptive Toggle Container --- */
       .toggle-container {
         position: fixed;
         top: 25px;
@@ -30,24 +29,25 @@
         display: flex;
         align-items: center;
         gap: 12px;
-        font-family: inherit;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
         font-size: 14px;
-        font-weight: 500;
+        font-weight: 600;
         color: #444;
         background: rgba(255, 255, 255, 0.85);
         padding: 8px 16px;
         border-radius: 30px;
+        border: 1px solid rgba(0, 0, 0, 0.08);
         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-        backdrop-filter: blur(5px);
-        transition: background 0.3s ease;
+        backdrop-filter: blur(8px);
+        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
       }
-      
+
       .toggle-label {
         cursor: pointer;
         user-select: none;
       }
 
-      /* The switch wrapper */
+      /* Switch Track */
       .switch {
         position: relative;
         display: inline-block;
@@ -56,20 +56,18 @@
         margin: 0;
       }
 
-      /* Hide default HTML checkbox */
       .switch input {
         opacity: 0;
         width: 0;
         height: 0;
       }
 
-      /* The slider */
       .slider {
         position: absolute;
         cursor: pointer;
         top: 0; left: 0; right: 0; bottom: 0;
-        background-color: #d1d5db; /* Light gray */
-        transition: .4s;
+        background-color: #d1d5db;
+        transition: all 0.3s ease;
         border-radius: 24px;
       }
 
@@ -80,19 +78,42 @@
         width: 18px;
         left: 3px;
         bottom: 3px;
-        background-color: white;
-        transition: .4s;
+        background-color: #ffffff;
+        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         border-radius: 50%;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
       }
 
-      /* When checked (Hobby view) */
+      /* Checked State */
       input:checked + .slider {
-        background-color: #222222; /* Dark color to match theme */
+        background-color: #000000;
       }
 
       input:checked + .slider:before {
         transform: translateX(20px);
+      }
+
+      /* --- BRUTALIST MORPH STATE (Active on Hobby view) --- */
+      .toggle-container.brutalist-style {
+        background: #f4f4f0;
+        border: 2px solid #000000;
+        border-radius: 0px;
+        font-family: "Courier New", Courier, monospace;
+        box-shadow: 4px 4px 0px #000000;
+        color: #000000;
+        backdrop-filter: none;
+      }
+
+      .toggle-container.brutalist-style .slider {
+        border-radius: 0px;
+        background-color: #000000;
+        border: 1px solid #000000;
+      }
+
+      .toggle-container.brutalist-style .slider:before {
+        border-radius: 0px;
+        background-color: #ffffff;
+        box-shadow: none;
       }
 
       /* --- Fade transition for content --- */
@@ -104,9 +125,7 @@
         to { opacity: 1; transform: translateY(0); }
       }
 
-      /* ========================================================= */
       /* --- ULTRA-MINIMAL BRUTALIST PHOTOGRAPHY GALLERY STYLES --- */
-      /* ========================================================= */
       #hobby-view {
         background-color: #f4f4f0;
         color: #000;
@@ -292,21 +311,20 @@
 
       /* View Section Disentanglement */
       .page-view {
-        display: none !important; /* Forces complete hiding of inactive view */
+        display: none !important;
         width: 100%;
         position: relative;
         clear: both;
       }
       
       .page-view.active-view {
-        display: block !important; /* Only active view renders in flow */
+        display: block !important;
       }
-        
     </style>
   </head>
   <body>
 
-    <!-- MINIMAL TOGGLE SWITCH -->
+    <!-- FIXED TOP-RIGHT ADAPTIVE TOGGLE SWITCH -->
     <div class="toggle-container">
       <span class="toggle-label" onclick="document.getElementById('view-toggle').click()">Academic</span>
       <label class="switch">
@@ -334,7 +352,7 @@
                   <div class=""><a class="menulink" target="_blank" href="https://github.com/nakranirudh">Github</a></div>
                   <div class=""><a class="menulink" target="_blank" href="https://www.linkedin.com/in/anirudh-nakra">Linkedin</a></div>
                   <div class=""><a class="menulink" target="_blank" href="https://scholar.google.com/citations?user=iE6tIeIAAAAJ&hl=en">Google Scholar</a></div>
-                  <br> <span class="papertitle"><u>Latest News</u></span> <br>Mar'26 - Paper accepted @ICML'26 <br>Mar'26 - Paper accepted @IJCAI'26 <br>Sep'24 - Announced CIMER Fellow @ UMD <br>May'24 - Won Campus 3MT Competition @ UMD <br>Jan'23 - Started PhD program @ UMD ECE <br>Aug'22 - Grad Summer Intern @ Hughes <br>Aug'21 - Started MS program @ UMD ECE
+                  <br> <span class="papertitle"><u>Latest News</u></span> <br>Mar'26 - Paper accepted @ICML'26 <br>Mar'26 - Paper accepted @IJCAI'26 <br>Sep'24 - Announced CIMER Fellow @ UMD <br>May'24 - Won Campus 3MT Competition @ UMD <br>Mar'24 - Won Engineering 3MT Competition @ UMD <br>Aug'23 - Selected a GLEAM fellow @ UMD ECE <br>Jan'23 - Started PhD program @ UMD ECE <br>Aug'22 - Grad Summer Intern @ Hughes <br>Aug'21 - Started MS program @ UMD ECE
                   </div>
               </div>
               <div class="col-md-8 pt-5 about">
@@ -510,10 +528,9 @@
       <div class="brutalist-wrapper">
         <div class="brutalist-header-bar">
           <span>ARCHIVE // PHOTOGRAPHY</span>
-          <span>ANIRUDH</span>
+          <span>ANIRUDH NAKRA</span>
         </div>
 
-        <!-- Empty grid that gets populated dynamically -->
         <div class="brutalist-grid" id="brutalist-grid"></div>
       </div>
     </div>
@@ -601,7 +618,6 @@
         document.getElementById('lb-image').src = item.src;
       }
 
-      // Keyboard navigation
       document.addEventListener('keydown', function(e) {
         const lb = document.getElementById('brutalist-lightbox');
         if (lb && lb.classList.contains('active')) {
@@ -611,19 +627,20 @@
         }
       });
 
-      // Load photos when DOM is ready
       document.addEventListener('DOMContentLoaded', loadGallery);
     </script>
 
-    <!-- TOGGLE LOGIC SCRIPT -->
+    <!-- ADAPTIVE MORPHING TOGGLE LOGIC SCRIPT -->
     <script>
       function toggleView(isHobby) {
         const academicView = document.getElementById('academic-view');
         const hobbyView = document.getElementById('hobby-view');
-      
+        const toggleContainer = document.querySelector('.toggle-container');
+
         if (isHobby) {
           academicView.classList.remove('active-view');
           hobbyView.classList.add('active-view');
+          toggleContainer.classList.add('brutalist-style');
           
           if (typeof loadGallery === 'function') {
             loadGallery();
@@ -631,25 +648,21 @@
         } else {
           hobbyView.classList.remove('active-view');
           academicView.classList.add('active-view');
+          toggleContainer.classList.remove('brutalist-style');
         }
-      
+
         window.scrollTo(0, 0);
       }
-      
+
       document.addEventListener('DOMContentLoaded', () => {
-        const toggleInput = document.querySelector('.switch input') || document.getElementById('view-toggle');
-        
+        const toggleInput = document.getElementById('view-toggle');
         if (toggleInput) {
-          toggleInput.addEventListener('change', (e) => {
-            toggleView(e.target.checked);
-          });
-          
           toggleView(toggleInput.checked);
         }
       });
     </script>
    
-    <!-- EXISTING TEXT ROTATOR SCRIPT -->
+    <!-- TEXT ROTATOR SCRIPT -->
     <script>
       var TxtRotate = function(el, toRotate, period) {
         this.toRotate = toRotate;
