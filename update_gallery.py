@@ -72,7 +72,7 @@ def build_manifest():
                 full_path = jpg_path
 
             clean_name = base_name.upper().replace("-", "_").replace(" ", "_")
-            title = f"#{idx:02d} // {clean_name}"
+            title = f"#{idx:02d}"
 
             photos.append({
                 "title": title,
