@@ -493,81 +493,52 @@
      </div>
 
     <!-- ================= HOBBY VIEW (ULTRA-MINIMAL BRUTALIST PORTFOLIO) ================= -->
-    <div id="hobby-view" class="fade-section" style="display: none;">
-      <div class="brutalist-wrapper">
-        
-        <!-- Header Strip -->
-        <div class="brutalist-header-bar">
-          <span>ARCHIVE // PHOTOGRAPHY</span>
-          <span>ANIRUDH NAKRA</span>
-        </div>
+    <!-- Inside <div id="hobby-view"> -->
+<div class="brutalist-wrapper">
+  <div class="brutalist-header-bar">
+    <span>ARCHIVE // PHOTOGRAPHY</span>
+    <span>ANIRUDH NAKRA</span>
+  </div>
 
-        <!-- Image Grid -->
-        <div class="brutalist-grid" id="brutalist-grid">
-          
-          <div class="brutalist-card" onclick="openLightbox(0)">
-            <div class="brutalist-frame">
-              <img src="https://picsum.photos/900/600?random=1" alt="Concrete facade">
-            </div>
-            <div class="brutalist-meta">
-              <span>#01 // CONCRETE_FACADE</span>
-              <span>35mm • f/5.6 • 1/1000s • ISO 200</span>
-            </div>
+  <!-- Empty grid that gets populated dynamically -->
+  <div class="brutalist-grid" id="brutalist-grid"></div>
+</div>
+
+<script>
+  let galleryData = [];
+
+  async function loadGallery() {
+    try {
+      const response = await fetch('images/photography/photos.json');
+      if (!response.ok) return;
+      
+      galleryData = await response.json();
+      const grid = document.getElementById('brutalist-grid');
+      grid.innerHTML = '';
+
+      galleryData.forEach((item, index) => {
+        const card = document.createElement('div');
+        card.className = 'brutalist-card';
+        card.onclick = () => openLightbox(index);
+        card.innerHTML = `
+          <div class="brutalist-frame">
+            <img src="${item.src}" alt="${item.title}">
           </div>
-
-          <div class="brutalist-card" onclick="openLightbox(1)">
-            <div class="brutalist-frame">
-              <img src="https://picsum.photos/900/600?random=2" alt="Shadow geometry">
-            </div>
-            <div class="brutalist-meta">
-              <span>#02 // SHADOW_GEOMETRY</span>
-              <span>50mm • f/2.8 • 1/500s • ISO 100</span>
-            </div>
+          <div class="brutalist-meta">
+            <span>${item.title}</span>
+            <span>${item.exif}</span>
           </div>
+        `;
+        grid.appendChild(card);
+      });
+    } catch (err) {
+      console.error('Gallery loading failed:', err);
+    }
+  }
 
-          <div class="brutalist-card" onclick="openLightbox(2)">
-            <div class="brutalist-frame">
-              <img src="https://picsum.photos/900/600?random=3" alt="Monochrome passage">
-            </div>
-            <div class="brutalist-meta">
-              <span>#03 // ELEVATED_PASSAGE</span>
-              <span>24mm • f/8.0 • 1/250s • ISO 400</span>
-            </div>
-          </div>
-
-          <div class="brutalist-card" onclick="openLightbox(3)">
-            <div class="brutalist-frame">
-              <img src="https://picsum.photos/900/600?random=4" alt="Brutalist tower">
-            </div>
-            <div class="brutalist-meta">
-              <span>#04 // TOWER_STRUCTURE</span>
-              <span>85mm • f/1.8 • 1/4000s • ISO 100</span>
-            </div>
-          </div>
-
-          <div class="brutalist-card" onclick="openLightbox(4)">
-            <div class="brutalist-frame">
-              <img src="https://picsum.photos/900/600?random=5" alt="Urban reflection">
-            </div>
-            <div class="brutalist-meta">
-              <span>#05 // URBAN_REFLECTION</span>
-              <span>35mm • f/4.0 • 1/125s • ISO 800</span>
-            </div>
-          </div>
-
-          <div class="brutalist-card" onclick="openLightbox(5)">
-            <div class="brutalist-frame">
-              <img src="https://picsum.photos/900/600?random=6" alt="Minimal horizon">
-            </div>
-            <div class="brutalist-meta">
-              <span>#06 // MINIMAL_HORIZON</span>
-              <span>50mm • f/11.0 • 1/60s • ISO 100</span>
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </div>
+  // Load photos when page ready
+  document.addEventListener('DOMContentLoaded', loadGallery);
+</script>
 
     <!-- LIGHTBOX OVERLAY -->
     <div class="brutalist-lightbox" id="brutalist-lightbox">
