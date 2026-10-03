@@ -4,6 +4,8 @@ on:
   push:
     paths:
       - 'images/photography/**'
+      - 'update_gallery.py'
+  workflow_dispatch: # <-- Adds manual "Run workflow" button in GitHub UI
 
 permissions:
   contents: write
