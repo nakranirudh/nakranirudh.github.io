@@ -291,17 +291,17 @@
       }
 
       /* View Section Disentanglement */
-    .page-view {
-      display: none !important; /* Forces complete hiding of inactive view */
-      width: 100%;
-      position: relative;
-      clear: both;
-    }
-    
-    .page-view.active-view {
-      display: block !important; /* Only active view renders in flow */
-    }
+      .page-view {
+        display: none !important; /* Forces complete hiding of inactive view */
+        width: 100%;
+        position: relative;
+        clear: both;
+      }
       
+      .page-view.active-view {
+        display: block !important; /* Only active view renders in flow */
+      }
+        
     </style>
   </head>
   <body>
@@ -310,7 +310,7 @@
     <div class="toggle-container">
       <span class="toggle-label" onclick="document.getElementById('view-toggle').click()">Academic</span>
       <label class="switch">
-        <input type="checkbox" id="view-toggle" onchange="toggleView(this)">
+        <input type="checkbox" id="view-toggle" onchange="toggleView(this.checked)">
         <span class="slider"></span>
       </label>
       <span class="toggle-label" onclick="document.getElementById('view-toggle').click()">Hobby</span>
@@ -334,7 +334,7 @@
                   <div class=""><a class="menulink" target="_blank" href="https://github.com/nakranirudh">Github</a></div>
                   <div class=""><a class="menulink" target="_blank" href="https://www.linkedin.com/in/anirudh-nakra">Linkedin</a></div>
                   <div class=""><a class="menulink" target="_blank" href="https://scholar.google.com/citations?user=iE6tIeIAAAAJ&hl=en">Google Scholar</a></div>
-                  <br> <span class="papertitle"><u>Latest News</u></span> <br>Mar'26 - Paper accepted @ICML'26 <br>Mar'26 - Paper accepted @IJCAI'26 <br>Sep'24 - Announced CIMER Fellow @ UMD <br>May'24 - Won Campus 3MT Competition @ UMD <br>Mar'24 - Won Engineering 3MT Competition @ UMD <br>Aug'23 - Selected a GLEAM fellow @ UMD ECE <br>Jan'23 - Started PhD program @ UMD ECE <br>Aug'22 - Grad Summer Intern @ Hughes <br>Aug'21 - Started MS program @ UMD ECE
+                  <br> <span class="papertitle"><u>Latest News</u></span> <br>Mar'26 - Paper accepted @ICML'26 <br>Mar'26 - Paper accepted @IJCAI'26 <br>Sep'24 - Announced CIMER Fellow @ UMD <br>May'24 - Won Campus 3MT Competition @ UMD <br>Jan'23 - Started PhD program @ UMD ECE <br>Aug'22 - Grad Summer Intern @ Hughes <br>Aug'21 - Started MS program @ UMD ECE
                   </div>
               </div>
               <div class="col-md-8 pt-5 about">
@@ -481,7 +481,7 @@
                    <p class="paper my-2 pl-2">
                      <span class="papertitle">Fall 2021</span><br>
                      <span class="conf">DATA 603 : Principles of Machine Learning</span><br>
-                 </p>
+                  </p>
                   </div>
                   <p class="header pt-5">Courses Taken</p>
                   <div class="py-2">
@@ -500,60 +500,23 @@
                   </div>
                   </div>
                  
-             </div>
-             
-         </div>
-     </div>
+              </div>
+              
+          </div>
+      </div>
 
     <!-- ================= HOBBY VIEW (ULTRA-MINIMAL BRUTALIST PORTFOLIO) ================= -->
-    <!-- Inside <div id="hobby-view"> -->
     <div id="hobby-view" class="page-view">
-<div class="brutalist-wrapper">
-  <div class="brutalist-header-bar">
-    <span>ARCHIVE // PHOTOGRAPHY</span>
-    <span>ANIRUDH NAKRA</span>
-  </div>
+      <div class="brutalist-wrapper">
+        <div class="brutalist-header-bar">
+          <span>ARCHIVE // PHOTOGRAPHY</span>
+          <span>ANIRUDH NAKRA</span>
+        </div>
 
-  <!-- Empty grid that gets populated dynamically -->
-  <div class="brutalist-grid" id="brutalist-grid"></div>
-</div>
-  </div>
-
-<script>
-  let galleryData = [];
-
-  async function loadGallery() {
-    try {
-      const response = await fetch('images/photography/photos.json');
-      if (!response.ok) return;
-      
-      galleryData = await response.json();
-      const grid = document.getElementById('brutalist-grid');
-      grid.innerHTML = '';
-
-      galleryData.forEach((item, index) => {
-        const card = document.createElement('div');
-        card.className = 'brutalist-card';
-        card.onclick = () => openLightbox(index);
-        card.innerHTML = `
-          <div class="brutalist-frame">
-            <img src="${item.src}" alt="${item.title}">
-          </div>
-          <div class="brutalist-meta">
-            <span>${item.title}</span>
-            <span>${item.exif}</span>
-          </div>
-        `;
-        grid.appendChild(card);
-      });
-    } catch (err) {
-      console.error('Gallery loading failed:', err);
-    }
-  }
-
-  // Load photos when page ready
-  document.addEventListener('DOMContentLoaded', loadGallery);
-</script>
+        <!-- Empty grid that gets populated dynamically -->
+        <div class="brutalist-grid" id="brutalist-grid"></div>
+      </div>
+    </div>
 
     <!-- LIGHTBOX OVERLAY -->
     <div class="brutalist-lightbox" id="brutalist-lightbox">
@@ -567,8 +530,8 @@
         <button class="lightbox-nav next" onclick="changeLightbox(1)">&#8594;</button>
       </div>
       <div class="lightbox-bottom">
-        <span id="lb-exif">35mm • f/5.6 • 1/1000s • ISO 200</span>
-        <span id="lb-counter">1 / 6</span>
+        <span id="lb-exif"></span>
+        <span id="lb-counter"></span>
       </div>
     </div>
 
@@ -578,6 +541,80 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
     <script src="assets/style-2.js"></script>
     
+    <!-- GALLERY & LIGHTBOX LOGIC SCRIPT -->
+    <script>
+      let galleryData = [];
+      let currentIndex = 0;
+
+      async function loadGallery() {
+        try {
+          const response = await fetch('images/photography/photos.json');
+          if (!response.ok) return;
+          
+          galleryData = await response.json();
+          const grid = document.getElementById('brutalist-grid');
+          grid.innerHTML = '';
+
+          galleryData.forEach((item, index) => {
+            const card = document.createElement('div');
+            card.className = 'brutalist-card';
+            card.onclick = () => openLightbox(index);
+            card.innerHTML = `
+              <div class="brutalist-frame">
+                <img src="${item.src}" alt="${item.title}">
+              </div>
+              <div class="brutalist-meta">
+                <span>${item.title}</span>
+                <span>${item.exif || ''}</span>
+              </div>
+            `;
+            grid.appendChild(card);
+          });
+        } catch (err) {
+          console.error('Gallery loading failed:', err);
+        }
+      }
+
+      function openLightbox(index) {
+        if (!galleryData || galleryData.length === 0) return;
+        currentIndex = index;
+        updateLightbox();
+        document.getElementById('brutalist-lightbox').classList.add('active');
+      }
+
+      function closeLightbox() {
+        document.getElementById('brutalist-lightbox').classList.remove('active');
+      }
+
+      function changeLightbox(direction) {
+        if (!galleryData || galleryData.length === 0) return;
+        currentIndex = (currentIndex + direction + galleryData.length) % galleryData.length;
+        updateLightbox();
+      }
+
+      function updateLightbox() {
+        const item = galleryData[currentIndex];
+        if (!item) return;
+        document.getElementById('lb-title').innerText = item.title;
+        document.getElementById('lb-exif').innerText = item.exif || '';
+        document.getElementById('lb-counter').innerText = (currentIndex + 1) + " / " + galleryData.length;
+        document.getElementById('lb-image').src = item.src;
+      }
+
+      // Keyboard navigation
+      document.addEventListener('keydown', function(e) {
+        const lb = document.getElementById('brutalist-lightbox');
+        if (lb && lb.classList.contains('active')) {
+          if (e.key === 'Escape') closeLightbox();
+          if (e.key === 'ArrowLeft') changeLightbox(-1);
+          if (e.key === 'ArrowRight') changeLightbox(1);
+        }
+      });
+
+      // Load photos when DOM is ready
+      document.addEventListener('DOMContentLoaded', loadGallery);
+    </script>
+
     <!-- TOGGLE LOGIC SCRIPT -->
     <script>
       function toggleView(isHobby) {
@@ -585,25 +622,20 @@
         const hobbyView = document.getElementById('hobby-view');
       
         if (isHobby) {
-          // Hide Academic completely, Show Hobby
           academicView.classList.remove('active-view');
           hobbyView.classList.add('active-view');
           
-          // Load photo grid
           if (typeof loadGallery === 'function') {
             loadGallery();
           }
         } else {
-          // Hide Hobby completely, Show Academic
           hobbyView.classList.remove('active-view');
           academicView.classList.add('active-view');
         }
       
-        // Ensure scroll resets to top so content doesn't remain scrolled down
         window.scrollTo(0, 0);
       }
       
-      // Connect to your toggle input element
       document.addEventListener('DOMContentLoaded', () => {
         const toggleInput = document.querySelector('.switch input') || document.getElementById('view-toggle');
         
@@ -612,7 +644,6 @@
             toggleView(e.target.checked);
           });
           
-          // Initialize correct view state on fresh page load
           toggleView(toggleInput.checked);
         }
       });
@@ -671,53 +702,6 @@
           }
         }
       };
-    </script>
-
-    <!-- BRUTALIST LIGHTBOX LOGIC -->
-    <script>
-      const galleryData = [
-        { title: "#01 // CONCRETE_FACADE", exif: "35mm • f/5.6 • 1/1000s • ISO 200", src: "https://picsum.photos/1200/900?random=1" },
-        { title: "#02 // SHADOW_GEOMETRY", exif: "50mm • f/2.8 • 1/500s • ISO 100", src: "https://picsum.photos/1200/900?random=2" },
-        { title: "#03 // ELEVATED_PASSAGE", exif: "24mm • f/8.0 • 1/250s • ISO 400", src: "https://picsum.photos/1200/900?random=3" },
-        { title: "#04 // TOWER_STRUCTURE", exif: "85mm • f/1.8 • 1/4000s • ISO 100", src: "https://picsum.photos/1200/900?random=4" },
-        { title: "#05 // URBAN_REFLECTION", exif: "35mm • f/4.0 • 1/125s • ISO 800", src: "https://picsum.photos/1200/900?random=5" },
-        { title: "#06 // MINIMAL_HORIZON", exif: "50mm • f/11.0 • 1/60s • ISO 100", src: "https://picsum.photos/1200/900?random=6" }
-      ];
-
-      let currentIndex = 0;
-
-      function openLightbox(index) {
-        currentIndex = index;
-        updateLightbox();
-        document.getElementById('brutalist-lightbox').classList.add('active');
-      }
-
-      function closeLightbox() {
-        document.getElementById('brutalist-lightbox').classList.remove('active');
-      }
-
-      function changeLightbox(direction) {
-        currentIndex = (currentIndex + direction + galleryData.length) % galleryData.length;
-        updateLightbox();
-      }
-
-      function updateLightbox() {
-        const item = galleryData[currentIndex];
-        document.getElementById('lb-title').innerText = item.title;
-        document.getElementById('lb-exif').innerText = item.exif;
-        document.getElementById('lb-counter').innerText = (currentIndex + 1) + " / " + galleryData.length;
-        document.getElementById('lb-image').src = item.src;
-      }
-
-      // Keyboard navigation
-      document.addEventListener('keydown', function(e) {
-        const lb = document.getElementById('brutalist-lightbox');
-        if (lb.classList.contains('active')) {
-          if (e.key === 'Escape') closeLightbox();
-          if (e.key === 'ArrowLeft') changeLightbox(-1);
-          if (e.key === 'ArrowRight') changeLightbox(1);
-        }
-      });
     </script>
   </body>
 </html>
