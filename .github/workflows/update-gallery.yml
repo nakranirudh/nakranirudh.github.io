@@ -21,13 +21,13 @@ jobs:
           python-version: '3.x'
 
       - name: Install dependencies
-        run: pip install Pillow
+        run: pip install Pillow pillow-heif
 
-      - name: Process photos & EXIF
+      - name: Process photos, HEIC conversion & EXIF
         run: python update_gallery.py
 
-      - name: Commit & push updated photos.json
+      - name: Commit & push updated photos and json
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "auto: update photos.json EXIF manifest"
-          file_pattern: 'images/photography/photos.json'
+          commit_message: "auto: convert HEIC photos & update gallery manifest"
+          file_pattern: 'images/photography/*'
